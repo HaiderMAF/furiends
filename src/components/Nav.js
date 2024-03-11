@@ -1,13 +1,13 @@
 import logo from '../images/logo-no-background.png'
 import logoColor from '../images/logo-color.png'
 
-const Nav = ({ minimal, authToken, setShowModal, showModal, setIsSignUp}) => {
+const Nav = ({ minimal,  setShowModal, showModal, setIsSignUp}) => {
 
     const handleClick = () => {
         setShowModal(true)
         setIsSignUp(false)
     }
-
+    const authToken = false;
     return (
         <nav>
             <div className="logo-container">
