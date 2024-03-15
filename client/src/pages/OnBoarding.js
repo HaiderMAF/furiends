@@ -1,5 +1,5 @@
 import { useState } from "react"
-// import Nav from "../components/Nav"
+import { useCookies } from 'react-cookie'
 
 const OnBoarding = () => {
     const [formData, setFormData] = useState({

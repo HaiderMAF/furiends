@@ -1,6 +1,7 @@
 import Nav from '../components/Nav'
 import AuthModal from '../components/AuthModal'
 import { useState } from 'react'
+//import { useNavigate } from 'react-router-dom'
 
 const Home = () => {
 
@@ -8,11 +9,13 @@ const Home = () => {
     const [isSignUp, setIsSignUp] = useState(true)
 
     const authToken = false
+    //const navigate = useNavigate()
 
     const handleClick = () => {
         console.log('clicked')
         setShowModal(true)
         setIsSignUp(true)
+        
     }
     return (
         //JSX needs to be wrapped
