@@ -10,7 +10,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
     const [password, setPassword] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [error, setError] = useState(null)
-    const [cookies, setCookie, removeCookie] = useCookies(null)
+    const [cookies, setCookie, removeCookie] = useCookies(['user'])
 
     let navigate = useNavigate()
     console.log(email, password, confirmPassword)
@@ -32,13 +32,14 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
             const response = await axios.post(`http://localhost:8000/${isSignUp ? 'signup' : 'login'}`, { email, password })
 
-            setCookie('Email', response.data.email);
-            setCookie('UserId', response.data.user_id);
             setCookie('AuthToken', response.data.token);
+            setCookie('UserId', response.data.userId);
             
             const success = response.status === 201
             if (success && isSignUp) navigate('/onboarding')
             if (success && !isSignUp) navigate('/dashboard')
+
+            window.location.reload()
 
         } catch (error) {
             console.log(error);

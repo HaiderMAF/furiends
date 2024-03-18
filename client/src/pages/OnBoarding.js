@@ -1,11 +1,13 @@
 import { useState } from "react"
 import { useCookies } from 'react-cookie'
 import { useNavigate } from 'react-router-dom'
+import logo from '../images/logo-no-background.png'
+import axios from 'axios'
 
 const OnBoarding = () => {
-    const navigate = useNavigate();
+    const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [formData, setFormData] = useState({
-        user_id: '',
+        user_id: cookies.UserId,
         first_name: '',
         dob_day: '',
         dob_month: '',
@@ -15,13 +17,24 @@ const OnBoarding = () => {
         country: '',
         city: '',
         bio: '',
-        url: ''
+        url: '',
+        matches: []
     })
 
+    let navigate = useNavigate();
 
-    const handleSubmit = (e) => {
-        navigate('/dashboard')
-    }
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+
+        try{
+            const response = await axios.put('http://localhost:8000/user', {formData})
+            const success = response.status === 200
+            if(success) navigate('/dashboard')
+        }
+        catch (error) {
+            console.log(error)
+        }
+}
 
     const handleChange = (e) => {
         const value = e.target.value
@@ -46,13 +59,8 @@ const OnBoarding = () => {
     console.log(formData)
     return (
         <>
-            {/* <Nav
-                className="nav-onboarding"
-                minimal={true}
-                setShowModal={() => {}}
-                showModal={false}   
-            /> */}
             <div className="onboarding">
+            <img src={logo} alt="dog" className="onboarding-nav" />
                 <h2>CREATE ACCOUNT</h2>
 
                 <form onSubmit={handleSubmit}>
@@ -460,7 +468,7 @@ const OnBoarding = () => {
                             required={true}
                         />
                         <div className="photo-container">
-                            <img src={formData.url} alt="profile pic preview"/>
+                            {formData.url && <img src={formData.url} alt="profile pic preview"/>}
                         </div>
                     </section>
                 </form>
