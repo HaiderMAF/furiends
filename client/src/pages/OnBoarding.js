@@ -1,7 +1,9 @@
 import { useState } from "react"
 import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const OnBoarding = () => {
+    const navigate = useNavigate();
     const [formData, setFormData] = useState({
         user_id: '',
         first_name: '',
@@ -17,8 +19,8 @@ const OnBoarding = () => {
     })
 
 
-    const handleSubmit = () => {
-        console.log('submitted')
+    const handleSubmit = (e) => {
+        navigate('/dashboard')
     }
 
     const handleChange = (e) => {

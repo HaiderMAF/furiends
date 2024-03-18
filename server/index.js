@@ -67,11 +67,11 @@ app.post('/login', async (req, res) => {
         await client.connect();
         const database = client.db('app-data');
         const users = database.collection('users');
-        console.log('Connected to MongoDB');
 
         const existingUser = await users.findOne({ email });
 
         const correctPassword = await bcrypt.compare(password, existingUser.hashed_password)
+        
         if (existingUser && correctPassword){
             const token = jwt.sign(existingUser, email, {
                 expiresIn: 60 * 24
@@ -81,6 +81,8 @@ app.post('/login', async (req, res) => {
         res.status(400).send('Invalid email or password');
     } catch (err) {
         console.log(err);
+    } finally {
+        await client.close();
     }
 });
 
