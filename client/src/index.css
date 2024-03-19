@@ -354,6 +354,7 @@ input[type=number] {
     padding: 20px;
     display: flex;
     flex-direction: column;
+<<<<<<< HEAD
 }
 
 /* Leaderboard Styles */
@@ -398,3 +399,6 @@ input[type=number] {
 .leaderboard-table tr:hover {
     background-color: #e5e5e5;
 }
+=======
+}
+>>>>>>> 42140c63ed91374c4271d3d42dcdbc11f3cdf591

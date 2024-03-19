@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
@@ -44,3 +45,6 @@ const Leaderboard = () => {
 };
 
 export default Leaderboard;
+=======
+//Leaderboard structure and view
+>>>>>>> 42140c63ed91374c4271d3d42dcdbc11f3cdf591

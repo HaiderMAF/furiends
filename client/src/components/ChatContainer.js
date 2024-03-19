@@ -1,8 +1,11 @@
 import ChatHeader from "./ChatHeader";
 import MatchesDisplay from "./MatchesDisplay";
 import ChatDisplay from "./ChatDisplay";
+<<<<<<< HEAD
 import Leaderboard from "./Leaderboard";
 
+=======
+>>>>>>> 42140c63ed91374c4271d3d42dcdbc11f3cdf591
 
 const ChatContainer = ({ user }) => {
     return (
