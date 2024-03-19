@@ -7,10 +7,11 @@ import ChatContainer from "../components/ChatContainer"
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
-    const [userMatches, setUserMatches] = useState([]);
+    const [stackUsers, setStackUsers] = useState(null);
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
 
+    const userId = cookies.UserId
 
     const getUser = async () => {
         const userId = cookies.UserId; // Assuming cookies is defined elsewhere
@@ -24,11 +25,11 @@ const Dashboard = () => {
         }
     };
 
-    const getUserMatches = async () => {
+    const getStackUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/user-matches');
-            console.log(response.data); // Log the response data to check its structure
-            setUserMatches(response.data);
+            const response = await axios.get('http://localhost:8000/user-matches');// Log the response data to check its structure
+            setStackUsers(response.data);
+            console.log(user)
         } catch (err) {
             console.log(err);
         }
@@ -36,14 +37,31 @@ const Dashboard = () => {
 
     useEffect(() => {
         getUser();
-        getUserMatches();
-    }, [user, userMatches]);
+    }, []);
 
-    console.log('userMatches', userMatches)
+    useEffect(() => {
+        if (user){
+            getStackUsers();
+        }
+    }, [user]);
 
 
-    const swiped = (direction, nameToDelete) => {
-        console.log('removing: ' + nameToDelete)
+    const updateMatches = async (matchedUserId) => {
+        try {
+            await axios.put('http://localhost:8000/addmatch', {
+                userId,
+                matchedUserId
+            })
+            getUser()
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
+    const swiped = (direction, matchedUserId) => {
+        if(direction === 'right') {
+            updateMatches(matchedUserId)
+        }
         setLastDirection(direction)
     }
 
@@ -51,21 +69,26 @@ const Dashboard = () => {
         console.log(name + ' left the screen')
     }
 
+    const matchedUserIds = user?.matches?.map(({ user_id }) => user_id).concat(userId);
+
+    const filteredUsers = stackUsers?.filter(stackUser => !matchedUserIds.includes(stackUser.user_id))
+    
+    console.log('filtered Users', filteredUsers)
     return (
         <>
-        {userMatches && user &&
+        {user &&
         <div className="dashboard">
             <ChatContainer user={user}/>
             <div className="swipe-container">
                 <div className="card-container">
-                {userMatches.map((user) =>
+                {stackUsers?.map((stackUser) =>
                     <TinderCard 
                         className="swipe" 
-                        key={user.id}
-                        onSwipe={(dir) => swiped(dir, user.first_name)} 
-                        onCardLeftScreen={() => outOfFrame(user.first_name)}>
-                        <div style={{ backgroundImage: `url(${user.url})` }} className="card">
-                            <h3>{user.first_name}</h3>
+                        key={stackUser.user_id}
+                        onSwipe={(dir) => swiped(dir, stackUser.user_id)} 
+                        onCardLeftScreen={() => outOfFrame(stackUser.first_name)}>
+                        <div style={{ backgroundImage: `url(${stackUser.url})` }} className="card">
+                            <h3>{stackUser.first_name}</h3>
                         </div>
                     </TinderCard>
                 )}

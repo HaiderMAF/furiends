@@ -16,6 +16,7 @@ app.get('/', (req, res) => {
 
 })
 
+//signup to the database
 //http://localhost:8000/signup
 app.post('/signup', async (req, res) => {
     const client = new MongoClient(uri)
@@ -59,6 +60,7 @@ app.post('/signup', async (req, res) => {
     }
 });
 
+//login to the database
 app.post('/login', async (req, res) => {
     const client = new MongoClient(uri);
     const { email, password } = req.body;
@@ -87,6 +89,7 @@ app.post('/login', async (req, res) => {
     }
 });
 
+//get individual user from the database
 //http://localhost:8000/users
 app.get('/user', async (req, res) => {
     const client = new MongoClient(uri)
@@ -106,6 +109,7 @@ app.get('/user', async (req, res) => {
     }
 })
 
+//get all available users from the database
 //http://localhost:8000/matches
 app.get('/user-matches', async (req, res) => {
     const client = new MongoClient(uri)
@@ -122,7 +126,7 @@ app.get('/user-matches', async (req, res) => {
     }
 })
 
-
+//update user in the database
 //http://localhost:8000/user
 app.put('/user',async (req, res) => {
     const client = new MongoClient(uri)
@@ -158,9 +162,56 @@ app.put('/user',async (req, res) => {
 
 })
 
+// Update User with a match
+app.put('/addmatch', async (req, res) => {
+    const client = new MongoClient(uri)
+    const {userId, matchedUserId} = req.body
 
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
 
+        const query = {user_id: userId}
+        const updateDocument = {
+            $push: {matches: {user_id: matchedUserId}}
+        }
+        const user = await users.updateOne(query, updateDocument)
+        res.send(user)
+    } finally {
+        await client.close()
+    }
+})
 
+//get all users by userIds in the database
+app.get('/users', async (req, res) => {
+    const client = new MongoClient(uri)
+    const userIds = JSON.parse(req.query.userIds)
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
+
+        const pipeline =
+            [
+                {
+                    '$match': {
+                        'user_id': {
+                            '$in': userIds
+                        }
+                    }
+                }
+            ]
+
+        const foundUsers = await users.aggregate(pipeline).toArray()
+
+        res.json(foundUsers)
+
+    } finally {
+        await client.close()
+    }
+})
 
 
 
