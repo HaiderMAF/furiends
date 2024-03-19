@@ -1,0 +1,256 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins&display=swap');
+
+* > * {
+    font-family: "Poppins", sans-serif;
+    margin: 0;
+}
+
+:root {
+    --color-dark: #2C3131;
+    --color-light: #F3F3F2;
+}
+
+#main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.board {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.board .leaderboard {
+    margin-bottom: 1em;
+}
+
+.board .duration {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1rem;
+}
+
+.board .duration > button {
+    border: 1px solid var(--color-light);
+    padding: 0.5rem 2rem;
+    border-radius: 50px;
+    background-color: transparent;
+    cursor: pointer;
+}
+
+.board .duration > button:hover {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+}
+
+.active {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+}
+
+#profile {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.flex {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 0.5rem;
+}
+
+.name {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.info {
+    padding: 1em;
+}
+
+.text-dark {
+    color: var(--color-dark);
+}
+/* Add these styles to your existing style.css */
+
+.board {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+}
+
+.board .leaderboard {
+    margin-bottom: 1em;
+    font-size: 2rem; /* Increase font size for the leaderboard title */
+}
+
+.board .duration {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1rem;
+}
+
+.board .duration > button {
+    border: 1px solid var(--color-light);
+    padding: 0.5rem 2rem;
+    border-radius: 50px;
+    background-color: transparent;
+    cursor: pointer;
+    font-size: 1rem; /* Adjust font size for the buttons */
+}
+
+.board .duration > button:hover,
+.board .duration > button.active {
+    background-color: var(--color-dark);
+    color: var(--color-light);
+}
+
+.period-content {
+    margin-top: 2rem;
+}
+
+.period-title {
+    margin-bottom: 1rem;
+    font-size: 1.5rem; /* Adjust font size for period titles */
+}
+/* Add these styles to your existing style.css */
+
+.board {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+    background-color: #f0f0f0; /* Light gray background */
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+.board .leaderboard {
+    margin-bottom: 1em;
+    font-size: 3rem;
+    color: #333; /* Dark text color */
+}
+
+.board .duration {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1rem;
+}
+
+.board .duration > button {
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 30px; /* Rounded buttons */
+    background-color: #007bff; /* Blue color for buttons */
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.board .duration > button:hover,
+.board .duration > button.active {
+    background-color: #0056b3; /* Darker blue for hover and active states */
+}
+
+.period-content {
+    margin-top: 2rem;
+}
+
+.period-title {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #333; /* Dark text color */
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Lighter box shadow */
+}
+/* Add these styles to your existing style.css */
+
+.board {
+    text-align: center;
+    margin: 2rem auto;
+    max-width: 800px;
+    background-color: #f9f9f9; /* Light background color */
+    border-radius: 10px;
+    padding: 2rem;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1); /* Box shadow for depth */
+}
+
+.board .leaderboard {
+    margin-bottom: 1em;
+    font-size: 3rem;
+    color: #333; /* Dark text color */
+}
+
+.board .duration {
+    display: flex;
+    justify-content: center;
+    gap: 1em;
+    margin-bottom: 1rem;
+}
+
+.board .duration > button {
+    border: none;
+    padding: 0.5rem 2rem;
+    border-radius: 30px; /* Rounded buttons */
+    background-color: #6c757d; /* Gray color for buttons */
+    color: white;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.board .duration > button:hover,
+.board .duration > button.active {
+    background-color: #495057; /* Darker gray for hover and active states */
+}
+
+.period-content {
+    margin-top: 2rem;
+}
+
+.period-title {
+    margin-bottom: 1rem;
+    font-size: 2rem;
+    color: #333; /* Dark text color */
+}
+
+.profile-image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1); /* Lighter box shadow */
+}
