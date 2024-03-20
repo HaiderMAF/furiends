@@ -1,4 +1,3 @@
-//Implement Leaderboard functionality on this 
 import { useEffect, useState } from "react"
 import TinderCard from "react-tinder-card"
 import axios from "axios"
@@ -10,28 +9,27 @@ const Dashboard = () => {
     const [stackUsers, setStackUsers] = useState(null);
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [hasPotentialFriends, setHasPotentialFriends] = useState(true);
 
     const userId = cookies.UserId
 
     const getUser = async () => {
-        const userId = cookies.UserId; // Assuming cookies is defined elsewhere
         try {
             const response = await axios.get('http://localhost:8000/user', {
                 params: { userId }
             });
             setUser(response.data);
         } catch (err) {
-            console.log(err);
+            console.error('Error fetching user data:', err);
         }
     };
 
     const getStackUsers = async () => {
         try {
-            const response = await axios.get('http://localhost:8000/user-matches');// Log the response data to check its structure
+            const response = await axios.get('http://localhost:8000/user-matches');
             setStackUsers(response.data);
-            console.log(user)
         } catch (err) {
-            console.log(err);
+            console.error('Error fetching stack users:', err);
         }
     };
 
@@ -40,11 +38,10 @@ const Dashboard = () => {
     }, []);
 
     useEffect(() => {
-        if (user){
+        if (user) {
             getStackUsers();
         }
     }, [user]);
-
 
     const updateMatches = async (matchedUserId) => {
         try {
@@ -59,7 +56,7 @@ const Dashboard = () => {
     }
 
     const swiped = (direction, matchedUserId) => {
-        if(direction === 'right') {
+        if (direction === 'right') {
             updateMatches(matchedUserId)
         }
         setLastDirection(direction)
@@ -69,38 +66,49 @@ const Dashboard = () => {
         console.log(name + ' left the screen')
     }
 
-    const matchedUserIds = user?.matches?.map(({ user_id }) => user_id).concat(userId);
+    const matchedUserIds = user?.matches.map(({ user_id }) => user_id).concat(userId);
 
     const filteredUsers = stackUsers?.filter(stackUser => !matchedUserIds.includes(stackUser.user_id))
+
+    useEffect(() => {
+        setHasPotentialFriends(filteredUsers && filteredUsers.length > 0);
+    }, [filteredUsers]);
     
-    console.log('filtered Users', filteredUsers)
+
     return (
         <>
-        {user &&
-        <div className="dashboard">
-            <ChatContainer user={user}/>
-            <div className="swipe-container">
-                <div className="card-container">
-                {stackUsers?.map((stackUser) =>
-                    <TinderCard 
-                        className="swipe" 
-                        key={stackUser.user_id}
-                        onSwipe={(dir) => swiped(dir, stackUser.user_id)} 
-                        onCardLeftScreen={() => outOfFrame(stackUser.first_name)}>
-                        <div style={{ backgroundImage: `url(${stackUser.url})` }} className="card">
-                            <h3>{stackUser.first_name}</h3>
+            {user &&
+                <div className="dashboard">
+                    <ChatContainer user={user} />
+                    <div className="swipe-container">
+                        <div className="card-container">
+                            {hasPotentialFriends ? (
+                                filteredUsers.map((stackUser) => (
+                                    <TinderCard
+                                        className="swipe"
+                                        key={stackUser.user_id}
+                                        onSwipe={(dir) => swiped(dir, stackUser.user_id)}
+                                        onCardLeftScreen={() => outOfFrame(stackUser.first_name)}
+                                    >
+                                        <div style={{ backgroundImage: `url(${stackUser.url})` }} className="card">
+                                            <h3>{stackUser.first_name}</h3>
+                                        </div>
+                                    </TinderCard>
+                                ))
+                            ) : (
+                                <div className="no-potential-friends-message">
+                                    Looks like there are no current potential furiends! Look back later.
+                                </div>
+                            )}
+                            <div className="swipe-info">
+                                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
+                            </div>
                         </div>
-                    </TinderCard>
-                )}
-                    <div className="swipe-info">
-                        {lastDirection ? <p>You swiped {lastDirection}</p> : <p/>}
-
                     </div>
                 </div>
-            </div>
-        </div>}
+            }
         </>
-    )
+    );
 }
 
-export default Dashboard
+export default Dashboard;

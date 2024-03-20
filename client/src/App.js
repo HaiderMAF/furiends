@@ -3,6 +3,7 @@ import Dashboard from './pages/Dashboard'
 import OnBoarding from './pages/OnBoarding'
 import { BrowserRouter, Routes, Route} from 'react-router-dom'
 import { useCookies } from 'react-cookie'
+import Leaderboard from './components/Leaderboard'
 
 
 const App = () => {
@@ -16,6 +17,7 @@ const App = () => {
         <Route path={"/"} element={<Home/>}/>
         {authToken && <Route path={"/dashboard"} element={<Dashboard/>}/>}
         {authToken && <Route path={"/onboarding"} element={<OnBoarding/>}/>}
+        {authToken && <Route path={"/leaderboard"} element={<Leaderboard/>}/>}
       </Routes>
     </BrowserRouter>
   );

@@ -1,7 +1,8 @@
 const PORT = 8000
 const express = require('express');
 const { MongoClient } = require('mongodb');
-const uri = 'mongodb+srv://dbuser:mypassword@cluster0.wihv2ix.mongodb.net/Cluster0?retryWrites=true&w=majority'
+require('dotenv').config();
+const uri = process.env.URI
 const { v4: uuidv4 } = require('uuid');
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
@@ -20,77 +21,81 @@ app.get('/', (req, res) => {
 //http://localhost:8000/signup
 app.post('/signup', async (req, res) => {
     const client = new MongoClient(uri)
-    const { email, password } = req.body;
-    const generatedUserId = uuidv4();
-    const hashedPassword = await bcrypt.hash(password, 10);
+    const {email, password} = req.body
+
+    const generatedUserId = uuidv4()
+    const hashedPassword = await bcrypt.hash(password, 10)
 
     try {
-        await client.connect();
-        const database = client.db('app-data');
-        const users = database.collection('users');
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
 
-        // Await the result of findOne to get the actual user object or null
-        const existingUser = await users.findOne({ email });
+        const existingUser = await users.findOne({email})
 
         if (existingUser) {
-            return res.status(409).send('User already exists. Please log in.');
+            return res.status(409).send('User already exists. Please login')
         }
 
-        console.log('Signed up user with email: ', email);
-        const sanitizedEmail = email.toLowerCase();
+        const sanitizedEmail = email.toLowerCase()
 
         const data = {
             user_id: generatedUserId,
             email: sanitizedEmail,
             hashed_password: hashedPassword
-        };
+        }
 
-        const result = await users.insertOne(data);
+        const insertedUser = await users.insertOne(data)
 
-        const token = jwt.sign(result, sanitizedEmail, {
+        const token = jwt.sign(insertedUser, sanitizedEmail, {
             expiresIn: 60 * 24
-        });
+        })
+        res.status(201).json({token, userId: generatedUserId})
 
-        res.status(201).json({ token, userId: generatedUserId });
     } catch (err) {
-        console.log(err);
-        res.status(500).send('Internal Server Error');
+        console.log(err)
     } finally {
-        await client.close();
+        await client.close()
     }
-});
+})
+
 
 //login to the database
 app.post('/login', async (req, res) => {
-    const client = new MongoClient(uri);
-    const { email, password } = req.body;
+    const client = new MongoClient(uri)
+    const { email, password } = req.body
 
     try {
-        await client.connect();
-        const database = client.db('app-data');
-        const users = database.collection('users');
+        await client.connect()
+        const database = client.db('app-data')
+        const users = database.collection('users')
 
-        const existingUser = await users.findOne({ email });
+        const user = await users.findOne({ email })
 
-        const correctPassword = await bcrypt.compare(password, existingUser.hashed_password)
-        
-        if (existingUser && correctPassword){
-            const token = jwt.sign(existingUser, email, {
+        if (!user) {
+            return res.status(400).json('User not found')
+        }
+
+        const correctPassword = await bcrypt.compare(password, user.hashed_password)
+
+        if (correctPassword) {
+            const token = jwt.sign(user, email, {
                 expiresIn: 60 * 24
             })
-            console.log('Logged in user with email: ', email);
-            res.status(201).json({ token, userId: existingUser.user_id });
+            return res.status(201).json({ token, userId: user.user_id })
         }
+
+        res.status(400).json('Invalid Credentials')
+
     } catch (err) {
-        res.status(400).send('Invalid email or password');
-        console.log(err);
+        console.error(err)
+        res.status(500).json('Internal Server Error')
     } finally {
-        await client.close();
+        await client.close()
     }
-});
+})
 
 //get individual user from the database
-//http://localhost:8000/users
 app.get('/user', async (req, res) => {
     const client = new MongoClient(uri)
     const userId = req.query.userId
@@ -110,7 +115,6 @@ app.get('/user', async (req, res) => {
 })
 
 //get all available users from the database
-//http://localhost:8000/matches
 app.get('/user-matches', async (req, res) => {
     const client = new MongoClient(uri)
 
@@ -203,9 +207,8 @@ app.get('/users', async (req, res) => {
                     }
                 }
             ]
-
+    
         const foundUsers = await users.aggregate(pipeline).toArray()
-
         res.json(foundUsers)
 
     } finally {
@@ -213,7 +216,60 @@ app.get('/users', async (req, res) => {
     }
 })
 
+// Leaderboard route - Example route to fetch leaderboard data
+app.get('/leaderboard', async (req, res) => {
+    const client = new MongoClient(uri)
 
+    try {
+        await client.connect();
+        const database = client.db('app-data');
+        const leaderboard = database.collection('leaderboard');
+        const leaderboardData = await leaderboard.find().toArray();
+
+        res.status(200).json(leaderboardData);
+    } catch (err) {
+        console.error(err);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        await client.close();
+    }
+});
+
+// Get Messages by from_userId and to_userId
+app.get('/messages', async (req, res) => {
+    const { userId, correspondingUserId } = req.query
+    const client = new MongoClient(uri)
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const messages = database.collection('messages')
+        const query = {
+            from_userId: userId, to_userId: correspondingUserId
+        }
+        const foundMessages = await messages.find(query).toArray()
+        res.send(foundMessages)
+    } finally {
+        await client.close()
+    }
+})
+
+// Add a Message to our Database
+app.post('/message', async (req, res) => {
+    const client = new MongoClient(uri)
+    const message = req.body.message
+
+    try {
+        await client.connect()
+        const database = client.db('app-data')
+        const messages = database.collection('messages')
+
+        const insertedMessage = await messages.insertOne(message)
+        res.send(insertedMessage)
+    } finally {
+        await client.close()
+    }
+})
 
 app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
 console.log('http://localhost:8000/')

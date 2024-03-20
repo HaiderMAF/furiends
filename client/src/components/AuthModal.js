@@ -3,19 +3,13 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 const AuthModal = ({ setShowModal, isSignUp }) => {
-    /*setShowModal must be called into AuthModal to display 
-    Create Form on this component*/
-
     const [email, setEmail] = useState(null)
     const [password, setPassword] = useState(null)
     const [confirmPassword, setConfirmPassword] = useState(null)
     const [error, setError] = useState(null)
-    const [cookies, setCookie, removeCookie] = useCookies(['user'])
+    const [cookies, setCookie, removeCookie] = useCookies(null)
 
     let navigate = useNavigate()
-    console.log(email, password, confirmPassword)
-
-    // const isSignUp = true
 
     const handleClick = () => {
         setShowModal(false)
@@ -34,7 +28,7 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
 
             setCookie('AuthToken', response.data.token);
             setCookie('UserId', response.data.userId);
-            
+
             const success = response.status === 201
             if (success && isSignUp) navigate('/onboarding')
             if (success && !isSignUp) navigate('/dashboard')
