@@ -1,4 +1,5 @@
-const PORT = 8000
+const DEFAULT_PORT = 8000;
+let port = process.env.PORT || DEFAULT_PORT;
 const express = require('express');
 const { MongoClient } = require('mongodb');
 require('dotenv').config();
@@ -11,6 +12,23 @@ const cors = require('cors')
 const app = express()
 app.use(cors())
 app.use(express.json())
+
+const client = new MongoClient(uri);
+app.listen(port, () => {
+    console.log(`Trying to run server on port ${port}`);
+    console.log('http://localhost:8000/')
+}).on('error', (err) => {
+    if (err.code === 'EADDRINUSE') {
+        console.log(`Port ${port} is already in use, trying another port...`);
+        port+=1;
+        app.listen(port, () => {
+            console.log(`Server is running on port ${port}`);
+            console.log('http://localhost:8000/')
+        });
+    } else {
+        console.error('Server error:', err);
+    }
+});
 
 app.get('/', (req, res) => {
     res.json('Hello to my app')
@@ -270,7 +288,4 @@ app.post('/message', async (req, res) => {
         await client.close()
     }
 })
-
-app.listen(PORT, () => console.log(`Server is running on port ${PORT}`))
-console.log('http://localhost:8000/')
 
