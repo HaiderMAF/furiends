@@ -3,6 +3,8 @@ import TinderCard from "react-tinder-card"
 import axios from "axios"
 import { useCookies } from "react-cookie"
 import ChatContainer from "../components/ChatContainer"
+import dislike from "../images/dislikepaw.png"
+import like from "../images/likepaw.png"
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
@@ -10,6 +12,7 @@ const Dashboard = () => {
     const [lastDirection, setLastDirection] = useState()
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [hasPotentialFriends, setHasPotentialFriends] = useState(true);
+    const [swipedUsers, setSwipedUsers] = useState([]);
 
     const userId = cookies.UserId
 
@@ -19,6 +22,7 @@ const Dashboard = () => {
                 params: { userId }
             });
             setUser(response.data);
+            
         } catch (err) {
             console.error('Error fetching user data:', err);
         }
@@ -60,6 +64,7 @@ const Dashboard = () => {
             updateMatches(matchedUserId)
         }
         setLastDirection(direction)
+        setSwipedUsers(prevSwipedUsers => [...prevSwipedUsers, matchedUserId]); // Add swiped user to the list
     }
 
     const outOfFrame = (name) => {
@@ -68,12 +73,14 @@ const Dashboard = () => {
 
     const matchedUserIds = user?.matches.map(({ user_id }) => user_id).concat(userId);
 
-    const filteredUsers = stackUsers?.filter(stackUser => !matchedUserIds.includes(stackUser.user_id))
+    const filteredUsers = stackUsers?.filter(stackUser => 
+        !matchedUserIds.includes(stackUser.user_id) && 
+        !swipedUsers.includes(stackUser.user_id)); // Exclude swiped users from potential matches
 
     useEffect(() => {
         setHasPotentialFriends(filteredUsers && filteredUsers.length > 0);
+        console.log(hasPotentialFriends)
     }, [filteredUsers]);
-    
 
     return (
         <>
@@ -90,19 +97,31 @@ const Dashboard = () => {
                                         onSwipe={(dir) => swiped(dir, stackUser.user_id)}
                                         onCardLeftScreen={() => outOfFrame(stackUser.first_name)}
                                     >
+                                    
                                         <div style={{ backgroundImage: `url(${stackUser.url})` }} className="card">
                                             <h3>{stackUser.first_name}</h3>
                                         </div>
                                     </TinderCard>
                                 ))
                             ) : (
-                                <div className="no-potential-friends-message">
-                                    Looks like there are no current potential furiends! Look back later.
+                                <div className="no-more-users-message">
+                                    No more potential friends available. Check back later!
                                 </div>
                             )}
-                            <div className="swipe-info">
-                                {lastDirection ? <p>You swiped {lastDirection}</p> : <p />}
-                            </div>
+                            {lastDirection === 'right' && (
+                                <img
+                                    src={like}
+                                    alt="like"
+                                    className={`swipe-icon like-fade-in`}
+                                />
+                            )}
+                            {lastDirection === 'left' && (
+                                <img
+                                    src={dislike}
+                                    alt="dislike"
+                                    className={`swipe-icon dislike-fade-in`}
+                                />
+                            )}
                         </div>
                     </div>
                 </div>

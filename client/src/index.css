@@ -151,8 +151,8 @@ We can also add an image in the overlay using url in background after linear-gra
 
 /*OnBoarding*/
 
-.onboarding-nav{
-    width: 80px; 
+.onboarding-nav {
+    width: 80px;
     height: auto;
     display: flex;
     padding: 20px;
@@ -288,7 +288,29 @@ input[type=number] {
 .dashboard .swipe-info {
     position: absolute;
     bottom: 0;
-    padding: 10px;
+}
+
+@keyframes fade-out {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.swipe-icon {
+    position: absolute;
+    padding-top: 80px;
+    width: 400px;
+    z-index: 1;
+    height: 400px;
+    display: flex;
+    opacity: 0;
+    animation: fade-out 1s ease-in-out forwards;
+    pointer-events: none;
+
 }
 
 /* Chat Container */
@@ -302,7 +324,7 @@ input[type=number] {
     z-index: 1;
 }
 
-.chat-container .chat-container-header{
+.chat-container .chat-container-header {
     background: linear-gradient(45deg, #de6262, #ffb88c);
     height: 100px;
     display: flex;
@@ -319,11 +341,11 @@ input[type=number] {
     padding: 10px;
 }
 
-.chat-container .option:disabled{
+.chat-container .option:disabled {
     border-bottom: solid 4px lightgray;
 }
 
-.chat-container .option:hover{
+.chat-container .option:hover {
     border-bottom: solid 4px orange;
 }
 
@@ -335,7 +357,7 @@ input[type=number] {
     color: white;
 }
 
-.img-container{
+.img-container {
     width: 30px;
     height: 30px;
     border-radius: 15px;
@@ -343,12 +365,30 @@ input[type=number] {
     margin: 10px;
 }
 
-.img-container:hover{
+.img-container:hover {
     border-bottom: solid 4px orange;
 }
 
 .img-container img {
     width: 100%;
+}
+
+.clickedProfileImg img {
+    width: 100%;
+}
+
+.clickedProfileImg {
+    width: 70px;
+    height: 70px;
+    overflow: hidden;
+    border-radius: 50px;
+    margin: 10px auto;
+    /* Center horizontally */
+    display: flex;
+    justify-content: center;
+}
+.chat-fname {
+    text-align: center;
 }
 
 /* Chat Display */
@@ -359,20 +399,21 @@ input[type=number] {
     overflow-y: auto;
 }
 
-.chat-input{
+.chat-input {
     padding: 20px;
     display: flex;
     flex-direction: column;
 }
 
 /* chat header */
-.logout-text{
+.logout-text {
     color: white;
     font-size: 20px;
     margin: 10px;
 }
+
 /* Leaderboard Styles */
-.leaderboard-option{
+.leaderboard-option {
     border: none;
     background-color: white;
     border-bottom: solid 4px red;
@@ -381,7 +422,7 @@ input[type=number] {
     padding: 10px;
 }
 
-.leaderboard-option:hover{
+.leaderboard-option:hover {
     border-bottom: solid 4px orange;
 }
 

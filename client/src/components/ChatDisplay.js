@@ -35,6 +35,8 @@ const ChatDisplay = ({ user, clickedUser }) => {
         if (userId && clickedUserId) {
             getUsersMessages();
             getClickedUsersMessages();
+            const interval = setInterval(getClickedUsersMessages, 3000);
+            return () => clearInterval(interval); 
         }
     }, [userId, clickedUserId]);
 
@@ -59,12 +61,11 @@ const ChatDisplay = ({ user, clickedUser }) => {
     })
 
     const descendingOrderMessages = messages.sort((a, b) => a.timestamp.localeCompare(b.timestamp))
-
-
-
+    const clickedUserName = clickedUser?.first_name
+    const clickedUserImg = clickedUser?.url
     return (
         <>
-            <Chat descendingOrderMessages={descendingOrderMessages} />
+            <Chat descendingOrderMessages={descendingOrderMessages} user={user} clickedUser={clickedUser} clickedUserImg={clickedUserImg}/>
             <ChatInput
                 user={user}
                 clickedUser={clickedUser}

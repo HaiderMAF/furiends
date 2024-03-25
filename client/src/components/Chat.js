@@ -1,21 +1,25 @@
-const Chat = ({ descendingOrderMessages }) => {
+const Chat = ({ descendingOrderMessages, clickedUser, clickedUserImg }) => {
     return (
         <>
             <div className="chat-display">
-                {descendingOrderMessages.map((message, _index) => (
-                    <div key={_index}>
-                        <div className="chat-message-header">
-                            <div className="img-container">
-                                <img src={message.img} alt={message.name + ' profile'} />
-                            </div>
-                            <p>{message.name}</p>
+                <div className="clickedProfileImg">
+                    <img src={clickedUserImg} alt={clickedUser?.first_name + ' profile'} />
+                </div>
+                <u><b><p className="chat-fname">{clickedUser?.first_name}</p></b></u>
+                {descendingOrderMessages.map((message, index) => (
+                    <div key={index}>
+                        <div className="img-container">
+                            <img src={message.img} alt={message.name + ' profile'} />
                         </div>
-                        <p>{message.message}</p>
+                        <div className="chat-message-header">
+                            <b><p>{message.name}</p></b>
+                            <p>{message.message}</p>
+                        </div>
                     </div>
-
                 ))}
             </div>
         </>
-    )
-}
+    );
+};
+
 export default Chat;
