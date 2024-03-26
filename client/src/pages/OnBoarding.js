@@ -18,6 +18,7 @@ const OnBoarding = () => {
         city: '',
         bio: '',
         url: '',
+        looking_for: '',
         matches: []
     })
 
@@ -26,22 +27,22 @@ const OnBoarding = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
 
-        try{
-            const response = await axios.put('http://localhost:8000/user', {formData})
+        try {
+            const response = await axios.put('http://localhost:8000/user', { formData })
             const success = response.status === 200
-            if(success) navigate('/dashboard')
+            if (success) navigate('/dashboard')
         }
         catch (error) {
             console.log(error)
         }
-}
+    }
 
     const handleChange = (e) => {
         const value = e.target.value
         const name = e.target.name
 
         setFormData((prevState) => ({
-            ...prevState, 
+            ...prevState,
             [name]: value
         }))
     }
@@ -60,8 +61,8 @@ const OnBoarding = () => {
     return (
         <>
             <div className="onboarding">
-            <img src={logo} alt="dog" className="onboarding-nav" />
-                <h2>CREATE ACCOUNT</h2>
+                <img src={logo} alt="dog" className="onboarding-nav" />
+                <h2 className="onboarding-title">CREATE ACCOUNT</h2>
 
                 <form onSubmit={handleSubmit}>
                     <section>
@@ -113,75 +114,73 @@ const OnBoarding = () => {
                         <label><b>Gender</b></label>
 
                         <div className="multiple-input-container">
-                        <input
-                            type="radio"
-                            id="male-gender"
-                            name="gender"
-                            value="male"
-                            onChange={handleChange}
-                            checked={formData.gender === "male"}  // Check if formData.gender matches "male"
-                        />
-                        <label htmlFor="male-gender">Male</label>
+                            <input
+                                type="radio"
+                                id="male-gender"
+                                name="gender"
+                                value="male"
+                                onChange={handleChange}
+                                checked={formData.gender === "male"}  // Check if formData.gender matches "male"
+                            />
+                            <label htmlFor="male-gender">Male</label>
 
-                        <input
-                            type="radio"
-                            id="female-gender"
-                            name="gender"
-                            value="female"
-                            onChange={handleChange}
-                            checked={formData.gender === "female"}
-                        />
-                        <label htmlFor="female-gender">Female</label>
+                            <input
+                                type="radio"
+                                id="female-gender"
+                                name="gender"
+                                value="female"
+                                onChange={handleChange}
+                                checked={formData.gender === "female"}
+                            />
+                            <label htmlFor="female-gender">Female</label>
                         </div>
 
-                        <label htmlFor="breed"/><b>Breed</b>
+                        <label htmlFor="breed" /><b>Breed</b>
                         <div>
                             <select value={formData.breed} name="breed" onChange={handleChange}>
-                                <option value="australianshepherd">Australian Shepherd</option>
-                                <option value="australiancattle">Australian Cattle Dog</option>
-                                <option value="bassethound">Basset Hound</option>
-                                <option value="beagle">Beagle</option>
-                                <option value="belgianshepherd">Belgian Shepherd</option>
-                                <option value="bernesemountain">Bernese Mountain Dog</option>
-                                <option value="bichonfrise">Bichon Frise</option>
-                                <option value="bordercollie">Border Collie</option>
-                                <option value="boxer">Boxer</option>
-                                <option value="bulldog">Bulldog</option>
-                                <option value="chihuahua">Chihuahua</option>
-                                <option value="chowchow">Chow Chow</option>
-                                <option value="chinesecrested">Chinese Crested</option>
-                                <option value="dachshund">Dachshund</option>
-                                <option value="dalmation">Dalmation</option>
-                                <option value="dobermann">Dobermann</option>
-                                <option value="englishsetter">English Setter</option>
-                                <option value="finnishspitz">Finnish Spitz</option>
-                                <option value="foxhound">Foxhound</option>
-                                <option value="frenchbulldog">French Bulldog</option>
-                                <option value="germanshepherd">German Shepherd</option>
-                                <option value="giantschnauzer">Giant Schnauzer</option>
-                                <option value="greatdane">Great Dane</option>
-                                <option value="greyhound">Greyhound</option>
-                                <option value="havanese">Havanese</option>
-                                <option value="irishwolfhound">Irish Wolfhound</option>
-                                <option value="italiangreyhound">Italian Greyhound</option>
-                                <option value="jackrussell">Jack Russell Terrier</option>
-                                <option value="lhasaapso">Lhasa Apso</option>
-                                <option value="maltese">Maltese</option>
-                                <option value="mastiff">Mastiff</option>
-                                <option value="newfoundland">Newfoundland</option>
-                                <option value="pomeranian">Pomeranian</option>
-                                <option value="poodle">Poodle</option>
-                                <option value="pug">Pug</option>
-                                <option value="retriever">Retriever</option>
-                                <option value="rottweiler">Rottweiler</option>
-                                <option value="samoyed">Samoyed</option>
-                                <option value="schnauzer">Schnauzer</option>
-                                <option value="shihtzu">Shih Tzu</option>
-                                <option value="siberianhusky">Siberian Husky</option>
-                                <option value="spaniel">Spaniel</option>
-                                <option value="welshcorgi">Welsh Corgi</option>
-                                <option value="yorkshire">Yorkshire Terrier</option>
-                                <option value="other">Other</option>
+                                <option value="Australian Shepherd">Australian Shepherd</option>
+                                <option value="Australian Cattle">Australian Cattle Dog</option>
+                                <option value="Basset Hound">Basset Hound</option>
+                                <option value="Beagle">Beagle</option>
+                                <option value="Bernese Mountain Dog">Bernese Mountain Dog</option>
+                                <option value="Bichon Frise">Bichon Frise</option>
+                                <option value="Border Collie">Border Collie</option>
+                                <option value="Boxer">Boxer</option>
+                                <option value="Bulldog">Bulldog</option>
+                                <option value="Chihuahua">Chihuahua</option>
+                                <option value="Chow Chow">Chow Chow</option>
+                                <option value="Chinese Crested">Chinese Crested</option>
+                                <option value="Dachshund">Dachshund</option>
+                                <option value="Dalmation">Dalmation</option>
+                                <option value="Dobermann">Dobermann</option>
+                                <option value="English setter">English Setter</option>
+                                <option value="Finnish Spitz">Finnish Spitz</option>
+                                <option value="Foxhound">Foxhound</option>
+                                <option value="French Bulldog">French Bulldog</option>
+                                <option value="German Shepherd">German Shepherd</option>
+                                <option value="Giant Schnauzer">Giant Schnauzer</option>
+                                <option value="Great Dane">Great Dane</option>
+                                <option value="Greyhound">Greyhound</option>
+                                <option value="Havanese">Havanese</option>
+                                <option value="Irish Wolfhound">Irish Wolfhound</option>
+                                <option value="Italian Greyhound">Italian Greyhound</option>
+                                <option value="Jack Russell">Jack Russell Terrier</option>
+                                <option value="Maltese">Maltese</option>
+                                <option value="Mastiff">Mastiff</option>
+                                <option value="Newfoundland">Newfoundland</option>
+                                <option value="Pomeranian">Pomeranian</option>
+                                <option value="Poodle">Poodle</option>
+                                <option value="Pug">Pug</option>
+                                <option value="Retriever">Retriever</option>
+                                <option value="Rottweiler">Rottweiler</option>
+                                <option value="Samoyed">Samoyed</option>
+                                <option value="Schnauzer">Schnauzer</option>
+                                <option value="Shihtzu">Shih Tzu</option>
+                                <option value="Siberian Husky">Siberian Husky</option>
+                                <option value="Spaniel">Spaniel</option>
+                                <option value="Welsh Corgi">Welsh Corgi</option>
+                                <option value="Yorkshire Terrier">Yorkshire Terrier</option>
+                                <option value="Other">Other</option>
                             </select>
                             <br></br>
                             <label htmlFor="other">If other, please specify: </label>
@@ -191,7 +190,7 @@ const OnBoarding = () => {
                         </div>
 
                         <div className="location_input">
-                            <h2>Location</h2>
+                            <h2>Country</h2>
                             <select value={formData.country} id="country" name="country" class="form-control" onChange={handleChange}>
                                 <option value="Afghanistan">Afghanistan</option>
                                 <option value="Åland Islands">Åland Islands</option>
@@ -439,8 +438,8 @@ const OnBoarding = () => {
                                 <option value="Zimbabwe">Zimbabwe</option>
                             </select>
                             <br></br>
-                            <label htmlFor="city"/><b>City</b><br></br>
-                            <input value={formData.city} type="text" name="city" id="city" onChange={handleChange}/>
+                            <label htmlFor="city" /><b>City</b><br></br>
+                            <input value={formData.city} type="text" name="city" id="city" onChange={handleChange} />
                         </div>
                         <div className="about">
                             <h2>ABOUT ME</h2>
@@ -456,6 +455,7 @@ const OnBoarding = () => {
                                 onChange={handleChange}
                             />
                         </div>
+
                         <input type="submit" value="Submit" />
                     </section>
 
@@ -468,7 +468,7 @@ const OnBoarding = () => {
                             required={true}
                         />
                         <div className="photo-container">
-                            {formData.url && <img src={formData.url} alt="profile pic preview"/>}
+                            {formData.url && <img src={formData.url} alt="profile pic preview" />}
                         </div>
                     </section>
                 </form>

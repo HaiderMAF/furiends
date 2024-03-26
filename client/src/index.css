@@ -16,6 +16,7 @@ body {
     font-size: 90px;
     color: rgb(0, 0, 0);
     margin: auto;
+    text-align: center;
 }
 
 .primary-button {
@@ -26,7 +27,8 @@ body {
     background: linear-gradient(45deg, #de6262, #ffb88c);
     padding: 12px 30px;
     border-radius: 30px;
-    margin: 15px;
+    margin: 15px auto;
+    display: block;
 }
 
 /*Add Hover*/
@@ -52,7 +54,7 @@ body {
     background-color: #ffb88c;
 }
 
-body {
+.card h3 {
     text-align: center;
 }
 
@@ -150,7 +152,9 @@ We can also add an image in the overlay using url in background after linear-gra
 }
 
 /*OnBoarding*/
-
+.onboarding-title{
+    text-align: center;
+}
 .onboarding-nav {
     width: 80px;
     height: auto;
@@ -190,6 +194,7 @@ We can also add an image in the overlay using url in background after linear-gra
     border-radius: 10px;
 }
 
+
 .onboarding form .multiple-input-bd {
     display: flex;
     flex-direction: row;
@@ -207,6 +212,7 @@ We can also add an image in the overlay using url in background after linear-gra
 
 .onboarding form label {
     margin: 10px 0;
+
 }
 
 
@@ -218,7 +224,16 @@ We can also add an image in the overlay using url in background after linear-gra
     margin-right: 10px;
 }
 
-.onboarding form .multiple-input-container input[type="radio"] {
+.onboarding form .onboarding-lookingfor label {
+    padding: 10px;
+    border: solid 2px rgb(144, 144, 144);
+    border-radius: 10px;
+    transition: all 0.3s;
+    margin-right: 10px;
+}
+
+.onboarding form .multiple-input-container input[type="radio"],
+.onboarding form .onboarding-lookingfor input[type="radio"] {
     display: none;
 }
 
@@ -236,12 +251,12 @@ input[type=number] {
 }
 
 .onboarding form input[type="radio"]:checked+label {
-    border: solid 2px black;
+    border: solid 2px red;
+}
+.onboarding .onboarding-lookingfor input[type="radio"]:checked+label {
+    border: solid 2px red;
 }
 
-.onboarding form input[type="radio"] :hover {
-    background-color: rgb(226, 115, 155);
-}
 
 .onboarding form .photo-container img {
     width: 100%;
@@ -316,11 +331,11 @@ input[type=number] {
 /* Chat Container */
 
 .chat-container {
+    /* text-align: center; */
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
         rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
     width: 30%;
-    text-align: left;
     z-index: 1;
 }
 
@@ -333,6 +348,7 @@ input[type=number] {
 }
 
 .chat-container .option {
+    
     border: none;
     background-color: white;
     border-bottom: solid 4px red;
@@ -375,6 +391,7 @@ input[type=number] {
 
 .clickedProfileImg img {
     width: 100%;
+    object-fit: cover;
 }
 
 .clickedProfileImg {
@@ -383,20 +400,33 @@ input[type=number] {
     overflow: hidden;
     border-radius: 50px;
     margin: 10px auto;
-    /* Center horizontally */
     display: flex;
     justify-content: center;
+    
 }
 .chat-fname {
     text-align: center;
 }
 
-/* Chat Display */
 .chat-display,
 .matches-display {
     padding: 20px;
-    height: 50vh;
-    overflow-y: auto;
+    padding-left: 10px;
+    
+}
+
+.match-card {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.img-container {
+    margin-right: 10px;
+}
+
+.match-card h3 {
+    margin: 0;
 }
 
 .chat-input {
@@ -466,3 +496,72 @@ input[type=number] {
 .leaderboard-table tr:hover {
     background-color: #e5e5e5;
 }
+
+/* Modal */
+.modal {
+    position: fixed;
+    z-index: 999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+}
+
+/* Modal content */
+.modal-content {
+    background-color: #ffffff; /* White background */
+    margin: auto; /* Adjust the top margin as needed */
+    padding-right: 20px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    padding-top: 0;
+    border-radius: 20px;
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+    max-width: 400px;
+    max-height: 95%; /* Set maximum height to 90% of viewport height */
+    overflow-x: auto;
+    height: fit-content;
+}
+
+/* Close button */
+.close {
+    color: black; /* White close button */
+    font-size: 28px;
+    padding-bottom: 10px;
+    font-weight: bold;
+    float: right;
+    cursor: pointer;
+}
+
+.close:hover {
+    color: #000000; /* Change close button color on hover */
+}
+
+/* Profile image */
+.modal .clickedUrl {
+    text-align: center;
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px; 
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Profile Display CSS */
+
+.profile-details p {
+    margin: 5px 0; /* Add margin to each paragraph */
+}
+
+.profile-details b {
+    display: inline-block; /* Ensure the age and name are in the same line */
+}
+
+.profile-details img {
+    width: 20px; /* Adjust the width of the icons */
+    height: auto; /* Maintain aspect ratio */
+    margin-right: 5px; /* Add margin to separate the icons from the text */
+}
+

@@ -1,9 +1,24 @@
+import { useState } from 'react';
+import ProfileDisplay from './ProfileDisplay';
+
 const Chat = ({ descendingOrderMessages, clickedUser, clickedUserImg }) => {
+    const [showProfile, setShowProfile] = useState(false);
+
+    const handleClickProfile = () => {
+        setShowProfile(true);
+    };
+
+    const handleCloseProfile = () => {
+        setShowProfile(false);
+    };
+
     return (
         <>
             <div className="chat-display">
                 <div className="clickedProfileImg">
-                    <img src={clickedUserImg} alt={clickedUser?.first_name + ' profile'} />
+
+
+                    <img onClick={handleClickProfile} src={clickedUserImg} alt={clickedUser?.first_name + ' profile'} />
                 </div>
                 <u><b><p className="chat-fname">{clickedUser?.first_name}</p></b></u>
                 {descendingOrderMessages.map((message, index) => (
@@ -18,6 +33,21 @@ const Chat = ({ descendingOrderMessages, clickedUser, clickedUserImg }) => {
                     </div>
                 ))}
             </div>
+            {/* Render the profile display component if showProfile is true */}
+            {showProfile && (
+                <ProfileDisplay
+                    clickedUser={clickedUser}
+                    clickedUserImg={clickedUser?.url}
+                    clickedUserName={clickedUser?.first_name}
+                    clickedUserDOB={clickedUser?.dob}
+                    clickedUserGender={clickedUser?.gender}
+                    clickedUserBreed={clickedUser?.breed}
+                    clickedUserLocation={clickedUser?.location}
+                    clickedUserBio={clickedUser?.bio}
+                    // Add other clicked user details as props
+                    onClose={handleCloseProfile} // Pass a function to handle closing the profile display
+                />
+            )}
         </>
     );
 };
