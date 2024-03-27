@@ -1,13 +1,9 @@
 import { useState } from 'react';
 import paw from '../images/pawprint.png';
 import pin from '../images/pin-icon.png';
-const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedUserDOB, clickedUserGender, clickedUserBreed, clickedUserLocation, clickedUserBio }) => {
+import heartIcon from '../images/heart-icon.png';
+const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedUserDOB, clickedUserGender, clickedUserBreed, clickedUserLocation, clickedUserBio, onSwipeRight }) => {
     const [showModal, setShowModal] = useState(true); // Initialize showModal with false
-
-    const openModal = () => {
-        setShowModal(true); // Set showModal to true when opening the modal
-    };
-
     const closeModal = () => {
         setShowModal(false);
     };
@@ -27,6 +23,11 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
         
         return age;
     };
+
+    const handleSwipeRight = () => {
+        onSwipeRight();
+    };
+
     clickedUserLocation = `${clickedUser?.city}, ${clickedUser?.country}`;
     return (
         <>
@@ -35,7 +36,7 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
                     <div className="modal-content">
                         <span className="close" onClick={closeModal}>&times;</span>
                         <div className="userprofile">
-                            <img className="clickedUrl" src={clickedUser.url} alt={clickedUserName + "'s Profile Picture"} onClick={openModal} />
+                            <img className="clickedUrl" src={clickedUser.url} alt={clickedUserName + "'s Profile Picture"}/>
                             <div className="profile-details">
                                 <b><h3>{clickedUserName}, {calculateAge(clickedUserDOB)}</h3></b><br></br>
                                 <p><img className="profile-paw" src={paw} alt="paw" />Breed: {clickedUserBreed}</p>
@@ -45,6 +46,8 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
                                 <p>{clickedUserBio}</p>
                             </div>
                         </div>
+                        {/* Heart icon for swipe right */}
+                        <img className="heart-icon" src={heartIcon} alt="Heart Icon" onClick={handleSwipeRight} />
                     </div>
                 </div>
             )}

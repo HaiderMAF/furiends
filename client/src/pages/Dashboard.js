@@ -5,6 +5,7 @@ import { useCookies } from "react-cookie"
 import ChatContainer from "../components/ChatContainer"
 import dislike from "../images/dislikepaw.png"
 import like from "../images/likepaw.png"
+import ProfileDisplay from "../components/ProfileDisplay"
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
@@ -15,6 +16,17 @@ const Dashboard = () => {
     const [swipedUsers, setSwipedUsers] = useState([]);
 
     const userId = cookies.UserId
+    const [showProfile, setShowProfile] = useState(false);
+    const [clickedUser, setClickedUser] = useState(null);
+
+    const handleClickProfile = (user) => {
+        setClickedUser(user);
+        setShowProfile(!showProfile);
+    };
+
+    const handleSwipeRight = () => {
+        console.log("Swipe right triggered");
+    };
 
     const getUser = async () => {
         try {
@@ -97,8 +109,11 @@ const Dashboard = () => {
                                         onSwipe={(dir) => swiped(dir, stackUser.user_id)}
                                         onCardLeftScreen={() => outOfFrame(stackUser.first_name)}
                                     >
-                                    
-                                        <div style={{ backgroundImage: `url(${stackUser.url})` }} className="card">
+                                        <div
+                                            style={{ backgroundImage: `url(${stackUser.url})` }}
+                                            className="card"
+                                            onClick={() => handleClickProfile(stackUser)}
+                                        >
                                             <h3>{stackUser.first_name}</h3>
                                         </div>
                                     </TinderCard>
@@ -126,6 +141,17 @@ const Dashboard = () => {
                     </div>
                 </div>
             }
+            {showProfile && (
+                <ProfileDisplay
+                    clickedUser={clickedUser}
+                    clickedUserName={clickedUser?.first_name}
+                    clickedUserDOB={clickedUser?.dob}
+                    clickedUserBreed={clickedUser?.breed}
+                    clickedUserCountry={clickedUser?.country}
+                    clickedUserBio={clickedUser?.bio}
+                    onSwipeRight={handleSwipeRight}
+                />
+            )}
         </>
     );
 }

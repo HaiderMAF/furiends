@@ -27,13 +27,13 @@ body {
     background: linear-gradient(45deg, #de6262, #ffb88c);
     padding: 12px 30px;
     border-radius: 30px;
-    margin: 15px auto;
-    display: block;
+    position: absolute; /* Set position to absolute */
+    top: 20px; /* Adjust top position */
+    right: 20px; /* Adjust right position */
 }
-
 /*Add Hover*/
 .primary-button:hover {
-    background: linear-gradient(260deg, pink, purple);
+    background: linear-gradient(260deg, pink, #de6262);
 }
 
 .secondary-button {
@@ -77,6 +77,10 @@ nav .nav-button {
     margin: 15px;
 }
 
+nav .nav-button:hover{
+    background: linear-gradient(260deg, pink, #de6262);
+}
+
 nav .nav-button:disabled {
     background-color: #3c2323;
     color: rgb(193, 42, 98)
@@ -102,6 +106,11 @@ We can also add an image in the overlay using url in background after linear-gra
     height: 100vh;
     position: fixed;
     background: linear-gradient(89deg, #f4bfbf, #e8d4c9);
+    background-color: #e8d4c9;
+    background-image: url(../src/images/furiendsbackground.png);
+    /* background-size: 1000px; */
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .home {
@@ -402,8 +411,12 @@ input[type=number] {
     margin: 10px auto;
     display: flex;
     justify-content: center;
-    
 }
+
+.clickedProfileImg:hover{
+    border-bottom: solid 4px orange;
+}
+
 .chat-fname {
     text-align: center;
 }
@@ -542,7 +555,7 @@ input[type=number] {
 /* Profile image */
 .modal .clickedUrl {
     text-align: center;
-    height: 400px;
+    height: 300px;
     width: 100%;
     object-fit: cover;
     border-radius: 20px; 
@@ -565,3 +578,21 @@ input[type=number] {
     margin-right: 5px; /* Add margin to separate the icons from the text */
 }
 
+.heart-icon {
+    height: 50px;
+    float: right;
+    transition: transform 0.3s ease; /* Add transition for smooth animation */
+}
+
+.heart-icon:hover {
+    animation: bounce 0.5s infinite; /* Apply bounce animation on hover */
+}
+
+@keyframes bounce {
+    0%, 100% {
+        transform: translateY(0); /* Initial and final position */
+    }
+    50% {
+        transform: translateY(-10px); /* Bounce up */
+    }
+}

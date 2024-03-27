@@ -10,9 +10,9 @@ const Nav = ({ authToken, minimal,  setShowModal, showModal, setIsSignUp}) => {
     
     return (
         <nav>
-            <div className="logo-container">
+            {/* <div className="logo-container">
                 <img className="logo-container" src={minimal ? logoColor : logo} alt='logo' />
-            </div>
+            </div> */}
             {/*Show Login If only not authenticated and not logged in in AND Disable Button When
             Modal is Shown */}
             {!authToken && !minimal && <button

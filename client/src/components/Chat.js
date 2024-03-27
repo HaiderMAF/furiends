@@ -5,19 +5,17 @@ const Chat = ({ descendingOrderMessages, clickedUser, clickedUserImg }) => {
     const [showProfile, setShowProfile] = useState(false);
 
     const handleClickProfile = () => {
-        setShowProfile(true);
+        setShowProfile(!showProfile);
     };
 
     const handleCloseProfile = () => {
         setShowProfile(false);
     };
-
+ 
     return (
         <>
             <div className="chat-display">
                 <div className="clickedProfileImg">
-
-
                     <img onClick={handleClickProfile} src={clickedUserImg} alt={clickedUser?.first_name + ' profile'} />
                 </div>
                 <u><b><p className="chat-fname">{clickedUser?.first_name}</p></b></u>

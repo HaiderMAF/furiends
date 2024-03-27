@@ -18,7 +18,6 @@ const OnBoarding = () => {
         city: '',
         bio: '',
         url: '',
-        looking_for: '',
         matches: []
     })
 
