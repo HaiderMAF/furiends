@@ -3,40 +3,43 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import { useCookies } from 'react-cookie'
 const AuthModal = ({ setShowModal, isSignUp }) => {
-    const [email, setEmail] = useState(null)
-    const [password, setPassword] = useState(null)
-    const [confirmPassword, setConfirmPassword] = useState(null)
-    const [error, setError] = useState(null)
-    const [cookies, setCookie, removeCookie] = useCookies(null)
-
-    let navigate = useNavigate()
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const [error, setError] = useState('');
+    const [cookies, setCookie, removeCookie] = useCookies(null);
+    const navigate = useNavigate();
 
     const handleClick = () => {
-        setShowModal(false)
-    }
+        setShowModal(false);
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
         try {
-            if (isSignUp && (password !== confirmPassword)) {
+            if (isSignUp && password !== confirmPassword) {
                 setError('Passwords do not match');
                 return;
             }
 
-            const response = await axios.post(`http://localhost:8000/${isSignUp ? 'signup' : 'login'}`, { email, password })
+            const response = await axios.post(
+                `http://localhost:8000/${isSignUp ? 'signup' : 'login'}`,
+                { email, password }
+            );
 
             setCookie('AuthToken', response.data.token);
             setCookie('UserId', response.data.userId);
 
-            const success = response.status === 201
-            if (success && isSignUp) navigate('/onboarding')
-            if (success && !isSignUp) navigate('/dashboard')
-
-            window.location.reload()
+            const success = response.status === 201;
+            if (success && isSignUp) navigate('/onboarding');
+            if (success && !isSignUp) navigate('/dashboard');
+            
+            window.location.reload();
 
         } catch (error) {
-            console.log(error);
+            setError('An error occurred. Please try again.');
+            console.error('Authentication Error:', error);
         }
     };
 
@@ -50,32 +53,37 @@ const AuthModal = ({ setShowModal, isSignUp }) => {
                     type="email"
                     id="email"
                     name="email"
-                    placeholder="email"
-                    required={true}
+                    placeholder="Email"
+                    required
+                    value={email}
                     onChange={(e) => setEmail(e.target.value)}
                 />
                 <input
                     type="password"
                     id="password"
                     name="password"
-                    placeholder="password"
-                    required={true}
+                    placeholder="Password"
+                    required
+                    value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                {isSignUp && <input
-                    type="password"
-                    id="password-check"
-                    name="password-check"
-                    placeholder="confirm password"
-                    required={true}
-                    onChange={(e) => setConfirmPassword(e.target.value)}
-                />}
-                <button className="secondary-button" type="submit">SUBMIT</button>
-                <p>{error}</p>
+                {isSignUp && (
+                    <input
+                        type="password"
+                        id="password-check"
+                        name="password-check"
+                        placeholder="Confirm Password"
+                        required
+                        value={confirmPassword}
+                        onChange={(e) => setConfirmPassword(e.target.value)}
+                    />
+                )}
+                <button className="secondary-button" type="submit">Submit</button>
+                {error && <p className="error-message">{error}</p>}
             </form>
             <h2>The social place for your furball</h2>
         </div>
-    )
-}
+    );
+};
 
 export default AuthModal;

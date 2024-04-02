@@ -6,6 +6,7 @@ import ChatContainer from "../components/ChatContainer"
 import dislike from "../images/dislikepaw.png"
 import like from "../images/likepaw.png"
 import ProfileDisplay from "../components/ProfileDisplay"
+import MatchModal from "../components/MatchModal"
 
 const Dashboard = () => {
     const [user, setUser] = useState(null)
@@ -14,6 +15,8 @@ const Dashboard = () => {
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [hasPotentialFriends, setHasPotentialFriends] = useState(true);
     const [swipedUsers, setSwipedUsers] = useState([]);
+    const [matchedUser, setMatchedUser] = useState(null);
+    const [showMatchAnimation, setShowMatchAnimation] = useState(false);
 
     const userId = cookies.UserId
     const [showProfile, setShowProfile] = useState(false);
@@ -24,7 +27,9 @@ const Dashboard = () => {
         setShowProfile(!showProfile);
     };
 
-    const handleSwipeRight = () => {
+    const handleSwipeRight = (matchedUserId) => {
+        setMatchedUser(matchedUserId);
+        setShowMatchAnimation(true);
         console.log("Swipe right triggered");
     };
 
@@ -34,7 +39,7 @@ const Dashboard = () => {
                 params: { userId }
             });
             setUser(response.data);
-            
+
         } catch (err) {
             console.error('Error fetching user data:', err);
         }
@@ -73,11 +78,12 @@ const Dashboard = () => {
 
     const swiped = (direction, matchedUserId) => {
         if (direction === 'right') {
-            updateMatches(matchedUserId)
+            updateMatches(matchedUserId);
+            handleSwipeRight(matchedUserId);
         }
-        setLastDirection(direction)
+        setLastDirection(direction);
         setSwipedUsers(prevSwipedUsers => [...prevSwipedUsers, matchedUserId]); // Add swiped user to the list
-    }
+    };
 
     const outOfFrame = (name) => {
         console.log(name + ' left the screen')
@@ -85,14 +91,21 @@ const Dashboard = () => {
 
     const matchedUserIds = user?.matches.map(({ user_id }) => user_id).concat(userId);
 
-    const filteredUsers = stackUsers?.filter(stackUser => 
-        !matchedUserIds.includes(stackUser.user_id) && 
+    const filteredUsers = stackUsers?.filter(stackUser =>
+        !matchedUserIds.includes(stackUser.user_id) &&
         !swipedUsers.includes(stackUser.user_id)); // Exclude swiped users from potential matches
 
     useEffect(() => {
         setHasPotentialFriends(filteredUsers && filteredUsers.length > 0);
-        console.log(hasPotentialFriends)
+        console.log(hasPotentialFriends);
     }, [filteredUsers]);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setShowMatchAnimation(false);
+        }, 5000); // Set the animation duration (5 seconds)
+        return () => clearTimeout(timer);
+    }, [showMatchAnimation]);
 
     return (
         <>
@@ -150,6 +163,13 @@ const Dashboard = () => {
                     clickedUserCountry={clickedUser?.country}
                     clickedUserBio={clickedUser?.bio}
                     onSwipeRight={handleSwipeRight}
+                />
+            )}
+            {showMatchAnimation && matchedUser && (
+                <MatchModal
+                    user={user}
+                    matchedUser={stackUsers.find(user => user.user_id === matchedUser)}
+                    onClose={() => setShowMatchAnimation(false)}
                 />
             )}
         </>

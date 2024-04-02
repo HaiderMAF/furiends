@@ -3,6 +3,7 @@ import AuthModal from '../components/AuthModal'
 import { useState } from 'react'
 import { useCookies } from 'react-cookie'
 //import { useNavigate } from 'react-router-dom'
+import logo from '../images/logo-no-background.png'
 
 const Home = () => {
     const [showModal, setShowModal] = useState(false)
@@ -22,7 +23,7 @@ const Home = () => {
         setShowModal(true)
         setIsSignUp(true)
     }
-    
+
     return (
         <div className="overlay">
             <Nav
@@ -33,7 +34,11 @@ const Home = () => {
                 setIsSignUp={setIsSignUp} />
             <div className="home">
 
-                {/* <h1 className="primary-title">Meet Your Fur-iends</h1> */}
+                <div class="title-container">
+                    <img src={logo} class="logo-image"></img>
+                </div>
+
+
 
                 <button className="primary-button" onClick={handleClick}>
                     {authToken ? 'Signout' : 'Create Account'}

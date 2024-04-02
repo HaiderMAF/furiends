@@ -12,11 +12,22 @@ body {
 
 /*Main Button for signout / create */
 
-.primary-title {
-    font-size: 90px;
-    color: rgb(0, 0, 0);
-    margin: auto;
-    text-align: center;
+.title-container {
+    display: none; /* Hide the container by default */
+}
+
+.logo-image {
+    max-width: 100px; /* Set maximum width for the image */
+    margin-right: 20px; /* Add space between the image and the text */
+}
+
+@media only screen and (max-width: 768px) {
+    .title-container {
+        padding-left: 12%;
+        display: flex; /* Display as flexbox on mobile devices */
+        align-items: center; /* Center vertically */
+        justify-content: start; /* Center horizontally */
+    }
 }
 
 .primary-button {
@@ -578,15 +589,6 @@ input[type=number] {
     margin-right: 5px; /* Add margin to separate the icons from the text */
 }
 
-.heart-icon {
-    height: 50px;
-    float: right;
-    transition: transform 0.3s ease; /* Add transition for smooth animation */
-}
-
-.heart-icon:hover {
-    animation: bounce 0.5s infinite; /* Apply bounce animation on hover */
-}
 
 @keyframes bounce {
     0%, 100% {
@@ -595,4 +597,54 @@ input[type=number] {
     50% {
         transform: translateY(-10px); /* Bounce up */
     }
+}
+/* MatchModal */
+
+.match-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.match-modal-content {
+    background: linear-gradient(45deg, #de6262, #ffb88c);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+    text-align: center;
+}
+
+.match-modal-content h2 {
+    font-size: 24px;
+    color: #fff;
+    margin-bottom: 20px;
+}
+
+.match-profiles {
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 20px;
+}
+
+.match-profile {
+    flex-basis: 45%;
+}
+
+.match-profile img {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+    padding: 20px;
+}
+
+.match-profile p {
+    font-size: 16px;
+    color: #555;
 }

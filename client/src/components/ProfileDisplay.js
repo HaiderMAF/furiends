@@ -46,8 +46,6 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
                                 <p>{clickedUserBio}</p>
                             </div>
                         </div>
-                        {/* Heart icon for swipe right */}
-                        <img className="heart-icon" src={heartIcon} alt="Heart Icon" onClick={handleSwipeRight} />
                     </div>
                 </div>
             )}
