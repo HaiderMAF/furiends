@@ -13,20 +13,26 @@ body {
 /*Main Button for signout / create */
 
 .title-container {
-    display: none; /* Hide the container by default */
+    display: none;
+    /* Hide the container by default */
 }
 
 .logo-image {
-    max-width: 100px; /* Set maximum width for the image */
-    margin-right: 20px; /* Add space between the image and the text */
+    max-width: 100px;
+    /* Set maximum width for the image */
+    margin-right: 20px;
+    /* Add space between the image and the text */
 }
 
 @media only screen and (max-width: 768px) {
     .title-container {
         padding-left: 12%;
-        display: flex; /* Display as flexbox on mobile devices */
-        align-items: center; /* Center vertically */
-        justify-content: start; /* Center horizontally */
+        display: flex;
+        /* Display as flexbox on mobile devices */
+        align-items: center;
+        /* Center vertically */
+        justify-content: start;
+        /* Center horizontally */
     }
 }
 
@@ -38,10 +44,14 @@ body {
     background: linear-gradient(45deg, #de6262, #ffb88c);
     padding: 12px 30px;
     border-radius: 30px;
-    position: absolute; /* Set position to absolute */
-    top: 20px; /* Adjust top position */
-    right: 20px; /* Adjust right position */
+    position: absolute;
+    /* Set position to absolute */
+    top: 20px;
+    /* Adjust top position */
+    right: 20px;
+    /* Adjust right position */
 }
+
 /*Add Hover*/
 .primary-button:hover {
     background: linear-gradient(260deg, pink, #de6262);
@@ -88,7 +98,7 @@ nav .nav-button {
     margin: 15px;
 }
 
-nav .nav-button:hover{
+nav .nav-button:hover {
     background: linear-gradient(260deg, pink, #de6262);
 }
 
@@ -172,9 +182,10 @@ We can also add an image in the overlay using url in background after linear-gra
 }
 
 /*OnBoarding*/
-.onboarding-title{
+.onboarding-title {
     text-align: center;
 }
+
 .onboarding-nav {
     width: 80px;
     height: auto;
@@ -273,6 +284,7 @@ input[type=number] {
 .onboarding form input[type="radio"]:checked+label {
     border: solid 2px red;
 }
+
 .onboarding .onboarding-lookingfor input[type="radio"]:checked+label {
     border: solid 2px red;
 }
@@ -351,7 +363,6 @@ input[type=number] {
 /* Chat Container */
 
 .chat-container {
-    /* text-align: center; */
     background-color: white;
     box-shadow: rgba(0, 0, 0, 0.05) 0px 6px 24px 0px,
         rgba(0, 0, 0, 0.08) 0px 0px 0px 1px;
@@ -368,7 +379,7 @@ input[type=number] {
 }
 
 .chat-container .option {
-    
+
     border: none;
     background-color: white;
     border-bottom: solid 4px red;
@@ -392,6 +403,15 @@ input[type=number] {
     padding: 20px;
     color: white;
 }
+
+.random-quote {
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
+    padding-left: 220px;
+    color: palevioletred;
+  }
 
 .img-container {
     width: 30px;
@@ -424,7 +444,7 @@ input[type=number] {
     justify-content: center;
 }
 
-.clickedProfileImg:hover{
+.clickedProfileImg:hover {
     border-bottom: solid 4px orange;
 }
 
@@ -436,7 +456,7 @@ input[type=number] {
 .matches-display {
     padding: 20px;
     padding-left: 10px;
-    
+
 }
 
 .match-card {
@@ -460,11 +480,32 @@ input[type=number] {
 }
 
 /* chat header */
-.logout-text {
-    color: white;
-    font-size: 20px;
-    margin: 10px;
+.chat-container-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px
 }
+
+.actions-container {
+    display: flex;
+    align-items: center;
+}
+
+.logout-container,
+.edit-profile-container {
+    margin-left: 10px;
+    padding-top: 70px;
+}
+
+.logout-text,
+.edit-profile-text {
+    font-size: 15px;
+    margin: 10px;
+    cursor: pointer;
+    /* Add cursor pointer for better UX */
+}
+
 
 /* Leaderboard Styles */
 .leaderboard-option {
@@ -530,13 +571,16 @@ input[type=number] {
     width: 100%;
     height: 100%;
     overflow: hidden;
-    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.6);
+    /* Semi-transparent background */
 }
 
 /* Modal content */
 .modal-content {
-    background-color: #ffffff; /* White background */
-    margin: auto; /* Adjust the top margin as needed */
+    background-color: #ffffff;
+    /* White background */
+    margin: auto;
+    /* Adjust the top margin as needed */
     padding-right: 20px;
     padding-bottom: 20px;
     padding-left: 20px;
@@ -544,14 +588,16 @@ input[type=number] {
     border-radius: 20px;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     max-width: 400px;
-    max-height: 95%; /* Set maximum height to 90% of viewport height */
+    max-height: 95%;
+    /* Set maximum height to 90% of viewport height */
     overflow-x: auto;
     height: fit-content;
 }
 
 /* Close button */
 .close {
-    color: black; /* White close button */
+    color: black;
+    /* White close button */
     font-size: 28px;
     padding-bottom: 10px;
     font-weight: bold;
@@ -560,7 +606,8 @@ input[type=number] {
 }
 
 .close:hover {
-    color: #000000; /* Change close button color on hover */
+    color: #000000;
+    /* Change close button color on hover */
 }
 
 /* Profile image */
@@ -569,35 +616,46 @@ input[type=number] {
     height: 300px;
     width: 100%;
     object-fit: cover;
-    border-radius: 20px; 
+    border-radius: 20px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
 /* Profile Display CSS */
 
 .profile-details p {
-    margin: 5px 0; /* Add margin to each paragraph */
+    margin: 5px 0;
+    /* Add margin to each paragraph */
 }
 
 .profile-details b {
-    display: inline-block; /* Ensure the age and name are in the same line */
+    display: inline-block;
+    /* Ensure the age and name are in the same line */
 }
 
 .profile-details img {
-    width: 20px; /* Adjust the width of the icons */
-    height: auto; /* Maintain aspect ratio */
-    margin-right: 5px; /* Add margin to separate the icons from the text */
+    width: 20px;
+    /* Adjust the width of the icons */
+    height: auto;
+    /* Maintain aspect ratio */
+    margin-right: 5px;
+    /* Add margin to separate the icons from the text */
 }
 
 
 @keyframes bounce {
-    0%, 100% {
-        transform: translateY(0); /* Initial and final position */
+
+    0%,
+    100% {
+        transform: translateY(0);
+        /* Initial and final position */
     }
+
     50% {
-        transform: translateY(-10px); /* Bounce up */
+        transform: translateY(-10px);
+        /* Bounce up */
     }
 }
+
 /* MatchModal */
 
 .match-modal-overlay {
@@ -606,18 +664,22 @@ input[type=number] {
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* Semi-transparent background */
     display: flex;
     justify-content: center;
     align-items: center;
+    padding-left: 220px;
 }
 
 .match-modal-content {
     background: linear-gradient(45deg, #de6262, #ffb88c);
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3); /* Box shadow for depth */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    /* Box shadow for depth */
     text-align: center;
+
 }
 
 .match-modal-content h2 {
@@ -642,6 +704,7 @@ input[type=number] {
     border-radius: 50%;
     margin-bottom: 10px;
     padding: 20px;
+    object-fit: cover;
 }
 
 .match-profile p {

@@ -9,8 +9,13 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
     };
 
     const calculateAge = (dob) => {
-        dob = `${clickedUser?.dob_year}-${clickedUser?.dob_month}-${clickedUser?.dob_day}`
-        const birthDate = new Date(dob);
+        const dobString = `${clickedUser?.dob_year}-${clickedUser?.dob_month}-${clickedUser?.dob_day}`;
+        const birthDate = new Date(dobString);
+        
+        // Check if the birthDate is valid
+        if (isNaN(birthDate.getTime())) {
+            return null; // Return null if the date is invalid
+        }
         
         // Get the current date
         const currentDate = new Date();
@@ -38,7 +43,7 @@ const ProfileDisplay = ({ clickedUser, clickedUserImg, clickedUserName, clickedU
                         <div className="userprofile">
                             <img className="clickedUrl" src={clickedUser.url} alt={clickedUserName + "'s Profile Picture"}/>
                             <div className="profile-details">
-                                <b><h3>{clickedUserName}, {calculateAge(clickedUserDOB)}</h3></b><br></br>
+                                <b><h3>{clickedUserName}, {calculateAge(clickedUser?.dob)}</h3></b><br></br>
                                 <p><img className="profile-paw" src={paw} alt="paw" />Breed: {clickedUserBreed}</p>
                                 <p><img className="profile-pin" src={pin} alt="pin" />Location: {clickedUserLocation}</p>
 

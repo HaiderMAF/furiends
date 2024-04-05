@@ -11,7 +11,7 @@ import MatchModal from "../components/MatchModal"
 const Dashboard = () => {
     const [user, setUser] = useState(null)
     const [stackUsers, setStackUsers] = useState(null);
-    const [lastDirection, setLastDirection] = useState()
+    const [lastDirection, setLastDirection] = useState(null)
     const [cookies, setCookie, removeCookie] = useCookies(['user'])
     const [hasPotentialFriends, setHasPotentialFriends] = useState(true);
     const [swipedUsers, setSwipedUsers] = useState([]);
@@ -56,6 +56,7 @@ const Dashboard = () => {
 
     useEffect(() => {
         getUser();
+        setLastDirection(null);
     }, []);
 
     useEffect(() => {
@@ -82,7 +83,7 @@ const Dashboard = () => {
             handleSwipeRight(matchedUserId);
         }
         setLastDirection(direction);
-        setSwipedUsers(prevSwipedUsers => [...prevSwipedUsers, matchedUserId]); // Add swiped user to the list
+        setSwipedUsers(prevSwipedUsers => [...prevSwipedUsers, matchedUserId]);
     };
 
     const outOfFrame = (name) => {
